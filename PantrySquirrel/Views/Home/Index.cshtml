@@ -1,0 +1,115 @@
+﻿@model ApiDataModels.RecipeModels.RecipeSearchResults
+
+@{
+    ViewData["Title"] = "Welcome Page";
+}
+<body>  
+    
+        <div class="wrapper">
+            <div class="text-center">
+                <div class="logoHolder">
+                    <img class="squirrelPic" src="~/images1/PS_logo.png"/>
+                </div>
+                <h4 class="display-4">Welcome to Pantry Squirrel. Unleash your pantry's potential!</h4>
+            </div>
+        </div>
+        <input type="text" name="UserIngredients" placeholder="Your Food Items (Be Specific)" id="UI" />
+        <button id="submitFoodItem" onclick="AddIngredient()">Add to List</button>
+        <ul id="foodItems" name="userFoodItems"></ul>
+        <input type="text" name="Filters" placeholder="Dietary Restrictions" id="diet"/>
+        <button  id="submit-diet" onclick="AddDietary()">Add Diet</button><br>
+
+        <form method="post" asp-controller="Home" asp-action="Index">
+            <input type="hidden" name="userIngredientsString" id="userIngredientsString" />
+            <button type="submit" id="submit">Look For Recipes</button>
+        </form>
+
+    <div class="card-container">
+        @foreach (var r in Model.hits)
+        {
+            <div class="card">
+                <a href="@r.recipe.url" target="_blank" class="img-card">
+                    <div class="link-text">Instructions</div>
+                    <img src="@r.recipe.image">
+                </a>
+                <div class="info-card">
+                    <div class="name">@r.recipe.label</div>
+                    <div class="tabs">
+                        <div class="ingredients-tab tab">
+                            Ingredients
+                        </div>
+                        <div class="nutrition-tab tab">
+                            Nutritional Info
+                        </div>
+                    </div>
+                    <div class="tab-contents">
+                        <div class="ingredients content">
+                            <ul>
+                                @foreach (var ingredient in r.recipe.ingredients)
+                                {
+                                    if (ingredient.hasIt)
+                                    {
+                                        <li class="recipe-ingredient hasIt">@ingredient.food</li>
+                                    }
+                                    else
+                                    {
+                                        <li class="recipe-ingredient notHasIt">@ingredient.food</li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                        <div class="nutrition content">
+                            <table>
+                                <tr>
+                                    <th>Nutrient</th>
+                                    <th>Amount</th>
+                                </tr>
+                                <tr>
+                                    <td>Calories</td>
+                                    <td>@Math.Round(r.recipe.totalNutrients.ENERC_KCAL.quantity) @r.recipe.totalNutrients.ENERC_KCAL.unit</td>
+                                </tr>
+                                <tr>
+                                    <td>Fat</td>
+                                    <td>@Math.Round(r.recipe.totalNutrients.FAT.quantity) @r.recipe.totalNutrients.FAT.unit</td>
+                                </tr>
+                                <tr>
+                                    <td>Sugar</td>
+                                    <td>@Math.Round(r.recipe.totalNutrients.SUGAR.quantity) @r.recipe.totalNutrients.SUGAR.unit</td>
+                                </tr>
+                                <tr>
+                                    <td>Sodium</td>
+                                    <td>@Math.Round(r.recipe.totalNutrients.NA.quantity) @r.recipe.totalNutrients.NA.unit</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</body>
+@*<table>
+    @foreach (var r in Model.hits)
+    {
+        <tr>
+            <td>
+                @r.recipe.label<br>
+                <img src="@r.recipe.image">
+            </td>
+        @for(int i = 0; i < @r.recipe.ingredients.Length; i++){
+                if (r.recipe.ingredients[i].hasIt)
+                {
+                    <td class="hasIt">
+                        @r.recipe.ingredients[i].food
+                    </td>
+                }
+                else
+                {
+                    <td class="notHasIt">
+                        @r.recipe.ingredients[i].food
+                    </td>
+                }
+              }
+        </tr>
+    }
+</table>*@

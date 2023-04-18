@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PantrySquirrel</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PantrySquirrel.styles.css" asp-append-version="true" />
+</head>
+@*------ Nav Bar Section -----*@
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+            @*<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Pantry Squirrel</a>*@
+                <div id="dropDownWrapper">
+                    @*----- Drop Down Menu -----*@
+                    <span id="hamburger" onclick="openNav()">&#9776; Welcome</span>
+                    <!--The overlay-->
+                    <div id="myNav" class="overlay">
+                        <!--Button to close the overlay nav-->
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <!--Overlay content-->
+                        <div class="overlay-content">
+                            <a href="https://localhost:7193/Home/Index">Home</a>
+                            <a href="https://localhost:7193/Home/BrowseRecipes">Browse Recipes</a>
+                            <a href="https://localhost:7193/Home/HowItWorks">How It Works</a>
+                            <a href="https://localhost:7193/Home/About">Meet The Developers</a>
+                        </div>
+                    </div>
+                </div>
+                <partial name="_loginPartial"/>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <footer class="border-top">
+        <div class="container">
+            &copy; 2023 - PantrySquirrel
+            <p>made possible by edamam.com</p>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://kit.fontawesome.com/307e18cba0.js" crossorigin="anonymous"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
